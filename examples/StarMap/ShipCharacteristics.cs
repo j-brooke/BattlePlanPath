@@ -6,7 +6,7 @@ namespace StarMap
     /// Class describing the capabilities of a particular type of spaceship (at least
     /// as they pertain to pathfinding.)
     /// </summary>
-    public class ShipCharacteristics
+    internal class ShipCharacteristics
     {
         public string ShipClass { get; }
         public double MaxJumpDistance { get; }

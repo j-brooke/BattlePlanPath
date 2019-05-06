@@ -6,7 +6,7 @@ namespace StarMap
     /// Describes a one-way wormhole between two stars that can be traversed very quickly
     /// by a ship with the right equipment.
     /// </summary>
-    public class Wormhole
+    internal class Wormhole
     {
         public string EntryStar { get; }
         public string ExitStar { get; }

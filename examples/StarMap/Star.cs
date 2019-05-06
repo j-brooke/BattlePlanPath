@@ -6,7 +6,7 @@ namespace StarMap
     /// Class describing a star.  In this example, spaceships can travel from one star to another
     /// but they can't stop or turn inbetween.
     /// </summary>
-    public class Star
+    internal class Star
     {
         public string Name { get; }
         public int LocationX { get; }

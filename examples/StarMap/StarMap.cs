@@ -10,7 +10,7 @@ namespace StarMap
     /// The PathSolver relies on this to find the best path.  We're using strings to identify our nodes (stars),
     /// and the ShipCharacteristics class as supplemental info for each path we try to find.
     /// </summary>
-    public class StarMap : IPathGraph<string, ShipCharacteristics>
+    internal class StarMap : IPathGraph<string, ShipCharacteristics>
     {
         /// <summary>
         /// Create the map based on lists created elsewhere.  The maxJump parameter is used to limit our notion
