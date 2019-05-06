@@ -54,6 +54,26 @@ namespace BattlePlanPath
         /// this restriction a little by returning PositiveInfinity from the cost function when you want extra
         /// restrictions.)
         /// </remarks>
+        /// <param name="seedNodeIds">A single node ID that is part of the space you'll be searching
+        /// for paths in.  All nodes that you might search for should be reachable from the seed given.  If
+        /// that's not guaranteed to be the case, use the overload where you pass an enumeration of seed IDs
+        /// instead.</param>
+        public void BuildAdjacencyGraph(TNode seedNodeId)
+        {
+            this.BuildAdjacencyGraph(new TNode[] { seedNodeId });
+        }
+
+        /// <summary>
+        /// Prepares the PathSolver by building a graph of which nodes are connected directly to each other.
+        /// Call this before calling FindPath, or any time the shape of your world changes.
+        /// </summary>
+        /// <remarks>
+        /// The idea behind this implementation is that the adjacency graph - which nodes are connected to
+        /// each other - won't change often.  The actual costs for moving from X to Y can vary as much as you
+        /// want, but the question of whether you can move directly from X to Y is fixed.  (You can work around
+        /// this restriction a little by returning PositiveInfinity from the cost function when you want extra
+        /// restrictions.)
+        /// </remarks>
         /// <param name="seedNodeIds">One or more node IDs that are part of the space you'll be searching
         /// for paths in.  These don't have to all be connected to each other, but every node you later
         /// search for paths from must be connected to at least one.</param>
@@ -103,6 +123,28 @@ namespace BattlePlanPath
                 info.Neighbors = null;
 
             _infoGraph.Clear();
+        }
+
+        /// <summary>
+        /// Finds the shortest path from the given start point to the given end point.
+        /// (If your IPathGraph.EstimatedCost can overestimate the cost, then this won't always
+        /// strictly be the shortest path.)
+        /// </summary>
+        /// <param name="startNodeId">
+        /// Your identifier for the starting node in the path.  (This could be a
+        /// 2D point, a city name, or whatever else makes sense in your world-space.)
+        /// </param>
+        /// <param name="endNodeId">
+        /// Your identifier for the node to find a path to.
+        /// </param>
+        /// <param name="callerData">
+        /// (Optional) Whatever info you want to be given to your IPathGraph while solving this path.
+        /// For example, you might want to give it the speed of the particular world object you're finding a path for,
+        /// or perhaps that world object itself.
+        /// </param>
+        public PathResult<TNode> FindPath(TNode startNodeId, TNode endNodeId, TPassthrough callerData)
+        {
+            return this.FindPath(startNodeId, new[] { endNodeId }, callerData);
         }
 
         /// <summary>
@@ -268,6 +310,26 @@ namespace BattlePlanPath
                 NodesInGraphCount = _infoGraph.Count,
                 MaxQueueSize = maxQueueSize,
             };
+        }
+
+        public string PerformanceSummary()
+        {
+            double pctGraphUsed = 0;
+            double pctReprocessed = 0;
+
+            if (this.GraphSize>0 && this.PathSolvedCount>0)
+            {
+                pctGraphUsed = 100.0 * this.LifetimeNodesTouchedCount / (this.GraphSize * this.PathSolvedCount);
+                pctReprocessed = 100.0 * this.LifetimeNodesReprocessedCount / (this.GraphSize * this.PathSolvedCount);
+            }
+
+            var msg = string.Format("pathCount={0}; timeMS={1}; %nodesTouched={2:F2}; %nodesReprocessed={3:F2}; maxQueueSize={4}",
+                this.PathSolvedCount,
+                this.LifetimeSolutionTimeMS,
+                pctGraphUsed,
+                pctReprocessed,
+                this.LifetimeMaxQueueSize);
+            return msg;
         }
 
         private readonly System.Diagnostics.Stopwatch _lifetimeTimer;

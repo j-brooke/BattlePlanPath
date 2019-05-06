@@ -97,17 +97,7 @@ namespace TileMap2D
             }
 
             // Write out a summary of the PathSolver's lifetime statistics.
-            double pctGraphUsed = 100.0 * solver.LifetimeNodesTouchedCount / (solver.GraphSize * solver.PathSolvedCount);
-            double pctReprocessed = 100.0 * solver.LifetimeNodesReprocessedCount / (solver.GraphSize * solver.PathSolvedCount);
-
-            var msg = string.Format("pathCount={0}; timeMS={1}; %nodesTouched={2:F2}; %nodesReprocessed={3:F2}; maxQueueSize={4}",
-                solver.PathSolvedCount,
-                solver.LifetimeSolutionTimeMS,
-                pctGraphUsed,
-                pctReprocessed,
-                solver.LifetimeMaxQueueSize);
-
-            Console.WriteLine(msg);
+            Console.WriteLine(solver.PerformanceSummary());
         }
 
         // Map as a grid of chars.  A space is open/traversable terrain.  Anything else is blocked.
