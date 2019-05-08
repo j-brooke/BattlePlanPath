@@ -3,12 +3,12 @@ An open-source C# implementation of the A* (A-Star) pathfinding algorithm.
 
 ## Requirements
 
-BattlePlanPath is built on .NET Standard 2.0 - it has no additional dependencies - so I should work with any reasonably modern .NET platform.
+BattlePlanPath is built on .NET Standard 2.0 - it has no additional dependencies - so it should work with any reasonably modern .NET platform.
 
 
 ## Characteristics
 
-Some info to help you decide if BattlePlanPath is right for you project.
+Some info to help you decide if BattlePlanPath is right for your project.
 
 * Single-threaded
 * Geometry-agnostic - BattlePlanPath doesn't care if your world is 2D, 3D, or entirely non-spatial.
@@ -74,3 +74,12 @@ The examples directory contains a couple simple programs to illustrate how Battl
 
 * TileMap2D plots paths through a simple 2D grid.
 * StarMap simulates interstellar travel - with wormholes!
+
+
+## References
+
+I found the following resources useful while learning about A*.
+
+* https://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
+* https://qiao.github.io/PathFinding.js/visual/
+* http://www.adammil.net/blog/v125_Roguelike_Vision_Algorithms.html (Not actually pathfinding, but related)
