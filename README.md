@@ -1,5 +1,5 @@
 # BattlePlanPath
-An open-source C# implementation of the A* (A-Star) pathfinding algorithm.
+A simple but flexible implementation of the A* (A-Star) pathfinding algorithm for  .NET Standard.
 
 ## Requirements
 
