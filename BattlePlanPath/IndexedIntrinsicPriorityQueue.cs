@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("BattlePlanPath.Tests")]
 namespace BattlePlanPath
 {
     /// <summary>
-    /// Special case version of IntrinsicPriorityQueue for use in A* pathfinding.
+    /// Special limited version of a Priority Queue for use in A* pathfinding.
     /// The item type (generic parameter T) for this class must descend from IndexedQueueItem.
     /// This exposes a field, QueueIndex, that the queue uses to track the item's location in
     /// its heap, to speed up the AdjustPriority operation.
@@ -89,7 +90,7 @@ namespace BattlePlanPath
 
         /// <summary>
         /// Adjusts the position of this item in the queue after its priority properties have changed.
-        //  O(log(n))
+        /// O(log(n))
         /// </summary>
         /// <remarks>
         /// WARNING: If the properties that go into your priority calculation change for an item in the queue,
