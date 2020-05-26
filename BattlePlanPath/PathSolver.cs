@@ -303,7 +303,7 @@ namespace BattlePlanPath
             {
                 Path = path,
                 StartingNode = startNodeId,
-                PathCost = arrivalInfo?.BestCostFromStart ?? 0,
+                PathCost = arrivalInfo?.BestCostFromStart ?? double.PositiveInfinity,
                 SolutionTimeMS = elapsedTimeMS,
                 NodesTouchedCount = nodesTouchedCount,
                 NodesReprocessedCount = nodesReprocessedCount,

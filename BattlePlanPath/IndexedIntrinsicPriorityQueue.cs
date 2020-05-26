@@ -207,10 +207,5 @@ namespace BattlePlanPath
         {
             return currentIndex*2 + 1;
         }
-
-        private static int IndexOfRightChild(int currentIndex)
-        {
-            return currentIndex*2 + 2;
-        }
     }
 }

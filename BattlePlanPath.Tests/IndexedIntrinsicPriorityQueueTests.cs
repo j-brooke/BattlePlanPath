@@ -46,8 +46,8 @@ namespace BattlePlanPath.Tests
             items[5].Value = 22;
             queue.AdjustPriority(items[5]);
 
-            items[6].Value = 20;
-            queue.AdjustPriority(items[6]);
+            items[12].Value = 3;
+            queue.AdjustPriority(items[12]);
 
             // Make a list of the values from the items, sorted according to LINQ.
             var valsSortedExternally = items.Select(item => item.Value)
@@ -60,6 +60,28 @@ namespace BattlePlanPath.Tests
                 valsSortedByQueue.Add(queue.Dequeue().Value);
 
             CollectionAssert.AreEqual(valsSortedExternally, valsSortedByQueue);
+        }
+
+        [TestMethod]
+        public void Dequeue_ThrowsIfEmpty()
+        {
+            var queue = new IndexedIntrinsicPriorityQueue<TestQueueItem>(TestQueueItem.IsLessThan);
+            Assert.ThrowsException<InvalidOperationException>(() => queue.Dequeue());
+        }
+
+        [TestMethod]
+        public void Enqueue_ResizeIfNeeded()
+        {
+            var items = Enumerable.Range(1, 14)
+                .Select(val => new TestQueueItem() { Value = val })
+                .ToList();
+
+            // Create a queue with a small initial capacity, and then enqueue more items than that.
+            var queue = new IndexedIntrinsicPriorityQueue<TestQueueItem>(4, TestQueueItem.IsLessThan);
+            foreach (var item in items)
+                queue.Enqueue(item);
+
+            Assert.AreEqual(items.Count, queue.Count);
         }
 
         private class TestQueueItem : IndexedQueueItem
